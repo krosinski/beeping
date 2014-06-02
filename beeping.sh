@@ -21,7 +21,7 @@ function beeeep {
 function os_ping {
     if [ "$(uname)" == "Darwin" ]
     then
-        ping -c 1 $host -t $ping_timeout 2>/dev/null >/dev/null
+        ping -c 1 -t $ping_timeout $host 2>/dev/null >/dev/null
     elif [ "$(uname)" == "Linux" ]
     then
         ping -c 1 $host -W $ping_timeout 2>/dev/null >/dev/null
