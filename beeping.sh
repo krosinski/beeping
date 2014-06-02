@@ -18,10 +18,19 @@ function beeeep {
     fi
 }
 
+function os_ping {
+    if [ "$(uname)" == "Darwin" ]
+    then
+        ping -c 1 $host -t $ping_timeout 2>/dev/null >/dev/null
+    elif [ "$(uname)" == "Linux" ]
+    then
+        ping -c 1 $host -W $ping_timeout 2>/dev/null >/dev/null
+    fi
+}
+
 trap "exit" INT
 while [ "1" ]
 do
-    ping -c 1 $host -W $ping_timeout 2>/dev/null >/dev/null && \
-        echo -n "." || (echo -n "X" && beeeep)
+    os_ping && echo -n "." || (echo -n "X" && beeeep)
     sleep $ping_sleep
 done
